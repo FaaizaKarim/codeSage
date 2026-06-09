@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeSage — AI Code Assistant</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- CodeMirror 6 via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.0.1/codemirror.min.js"></script>
+
+  <!-- Tabler Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="navbar">
+    <div class="navbar-brand">
+      <span class="brand-icon">⚡</span>
+      <span class="brand-name">CodeSage</span>
+      <span class="brand-tag">AI Dev Assistant</span>
+    </div>
+    <div class="navbar-right">
+      <select id="lang-select" title="Select language">
+        <option value="javascript">JavaScript</option>
+        <option value="python">Python</option>
+        <option value="php">PHP</option>
+        <option value="typescript">TypeScript</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+        <option value="sql">SQL</option>
+        <option value="java">Java</option>
+        <option value="cpp">C++</option>
+      </select>
+      <button id="clear-btn" class="btn btn-ghost" title="Clear editor">
+        <i class="ti ti-trash"></i> Clear
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Layout: Editor + Sidebar -->
+  <main class="layout">
+
+    <!-- Left: Code Editor Panel -->
+    <section class="editor-panel" aria-label="Code editor">
+      <div class="editor-topbar">
+        <div class="file-tabs">
+          <div class="tab active">
+            <i class="ti ti-file-code"></i>
+            <span id="filename-label">main.js</span>
+          </div>
+        </div>
+        <div class="editor-meta">
+          <span id="line-count">0 lines</span>
+          <span id="char-count">0 chars</span>
+        </div>
+      </div>
+
+      <!-- CodeMirror mounts here -->
+      <div id="editor-container"></div>
+
+      <!-- Action Buttons -->
+      <div class="action-bar">
+        <button class="action-btn" data-action="explain" title="Explain this code">
+          <i class="ti ti-book-2"></i>
+          <span>Explain</span>
+        </button>
+        <button class="action-btn" data-action="refactor" title="Refactor this code">
+          <i class="ti ti-refresh"></i>
+          <span>Refactor</span>
+        </button>
+        <button class="action-btn" data-action="bugs" title="Find bugs and issues">
+          <i class="ti ti-bug"></i>
+          <span>Find Bugs</span>
+        </button>
+        <button class="action-btn" data-action="tests" title="Write unit tests">
+          <i class="ti ti-test-pipe"></i>
+          <span>Write Tests</span>
+        </button>
+        <button class="action-btn" data-action="improve" title="Suggest improvements">
+          <i class="ti ti-sparkles"></i>
+          <span>Improve</span>
+        </button>
+        <button class="action-btn" data-action="animate">
+          <i class="ti ti-player-play"></i>
+          <span>Animate</span>
+        </button>
+      </div>
+    </section>
+
+    <div
+      class="resize-handle"
+      id="resize-handle"
+      role="separator"
+      aria-orientation="vertical"
+      aria-label="Resize editor and sidebar"
+      tabindex="0"
+    ></div>
+
+    <!-- Right: AI Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="AI analysis sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-title">
+          <span class="status-dot" id="status-dot"></span>
+          <span>CodeSage AI</span>
+        </div>
+        <div class="sidebar-model">llama-3.3-70b · Groq</div>
+      </div>
+
+      <!-- Response Output -->
+      <div class="sidebar-body" id="response-container">
+        <div class="sidebar-placeholder" id="placeholder">
+          <div class="placeholder-icon">🤖</div>
+          <p>Write or paste code in the editor, then click an action button to get AI analysis.</p>
+          <div class="quick-tips">
+            <div class="tip"><strong>Explain</strong> — understand what code does</div>
+            <div class="tip"><strong>Refactor</strong> — cleaner, better code</div>
+            <div class="tip"><strong>Find Bugs</strong> — catch issues early</div>
+            <div class="tip"><strong>Write Tests</strong> — auto-generate tests</div>
+            <div class="tip"><strong>Improve</strong> — performance & best practices</div>
+          </div>
+        </div>
+        <div class="response-content" id="response-output" style="display:none;"></div>
+      </div>
+
+      <!-- Custom Question Input -->
+      <div class="sidebar-input-area">
+        <div class="input-row">
+          <input
+            type="text"
+            id="custom-input"
+            placeholder="Ask anything about this code..."
+            autocomplete="off"
+          />
+          <button id="send-btn" title="Send">
+            <i class="ti ti-send"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
